@@ -78,5 +78,5 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy: https://github.com/shouchengcheng/shouchengcheng.github.io
-  type: git
+  type:git
 branch: master
