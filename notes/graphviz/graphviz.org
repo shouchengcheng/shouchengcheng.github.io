@@ -1,0 +1,39 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/worg.css" />
+
+* graphviz绘图
+
+[[http://www.graphviz.org/gallery/][官网参考]]
+
+** 基本
+
+
+   * dot默认布局方式，主要用于有向图
+   * neato基于string-model（又称force-based）算法
+   * twopi径向布局
+   * circo圆环布局
+   * fdp用于无向图
+#+BEGIN_EXAMPLE
+dot -Tpng xxx.dot -o xxx.png
+#+END_EXAMPLE
+
+** emacs org-mode support dot
+
+[[https://0000-bigtree.github.io/blog/2016/04/08/graphviz-syntax.html][参考链接]]
+
+#+BEGIN_SRC dot :cmd dot :file ./images/simple-test-dot.png :exports results
+digraph G{
+main -> parse -> execute;
+main -> init;
+main -> cleanuy;
+execute -> make_string;
+execute -> printf;
+init -> make_string;
+main -> printf;
+execute -> compare
+}
+#+END_SRC
+
+#+RESULTS:
+[[file:./images/simple-test-dot.png]]
+
+
