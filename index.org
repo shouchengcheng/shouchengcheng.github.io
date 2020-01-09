@@ -1,8 +1,8 @@
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/worg.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./css/worg.css" />
 
-* 寿成承的个人博客
+#+TITLE: 寿成承的个人博客
 
-** 常用工具使用
+* 常用工具使用
 
 *** [[./notes/graphviz/graphviz.org][graphviz]]
     Graphviz(Graph Visualization Software的缩写)是一个由AT&T实验室启动的开源工具包，用于绘制DOT语言脚本描述的图形。它也提供了供其它软件使用的库。Graphviz是大名鼎鼎的贝尔实验室的几位牛人开发的一个画图工具。它的理念和一般的“所见即所得”的画图工具不一样，是“所想即所得”。Graphviz提供了dot语言来编写绘本。
