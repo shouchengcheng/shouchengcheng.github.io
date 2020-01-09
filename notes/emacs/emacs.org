@@ -1,0 +1,46 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../../css/worg.css" />
+
+#+TITLE: EMACS
+
+* 简介
+  EMACS，即Editor MACroS（编辑器宏）的缩写，最初由Richard Stallman(理查德·马修·斯托曼)于1975年在MIT协同Guy Steele共同完成。这一创意的灵感来源于TECMAC和TMACS，它们是由Guy Steele、Dave Moon、Richard Greenblatt、Charles Frankston等人编写的宏文本编辑器。
+
+[[https://www.gnu.org/software/emacs/][官网]]
+
+* 个人使用插件
+
+#+BEGIN_EXAMPLE
+imenu-anywhere
+ac-etags
+counsel-etags
+which-key
+undo-tree
+neotree
+swiper
+ivy
+magit
+counsel-projectile
+projectile
+#+END_EXAMPLE
+
+** which-key
+   按键提示插件
+#+BEGIN_EXAMPLE
+(which-key-mode 1)
+(which-key-set-side-window-right) ;;右侧显示
+#+END_EXAMPLE
+
+** undo-tree
+   撤回功能扩展插件，可以看最近编辑的历史记录
+
+** projectile
+   项目管理插件，可以方便的查找项目下面的文件，只要在项目root的地方创建一个空文件，名字叫*.projectile*。
+#+BEGIN_EXAMPLE
+(projectile-global-mode)
+;;保存缓存
+(setq projectile-enable-caching t)
+;;绑定F6快捷键，快速查找文件
+(global-set-key [f6] 'counsel-projectile-find-file) 
+#+END_EXAMPLE
+
+* [[../../emacs/config/init.el][我的个人配置]]

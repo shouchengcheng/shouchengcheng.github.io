@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-01-09 四 13:03 -->
+<!-- 2020-01-09 四 13:05 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>寿成承的个人博客</title>
+<title>EMACS</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="shouchengcheng" />
 <style type="text/css">
@@ -180,7 +180,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="./css/worg.css" />
+<link rel="stylesheet" type="text/css" href="../../css/worg.css" />
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -230,48 +230,101 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">寿成承的个人博客</h1>
+<h1 class="title">EMACS</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf2acd60">1. 常用工具使用</a>
+<li><a href="#orgb7a2c79">1. 简介</a></li>
+<li><a href="#org94844cb">2. 个人使用插件</a>
 <ul>
-<li><a href="#org374798f">1.1. emacs</a></li>
-<li><a href="#orged1de70">1.2. graphviz</a></li>
+<li><a href="#org00231ce">2.1. which-key</a></li>
+<li><a href="#orgd5ab88f">2.2. undo-tree</a></li>
+<li><a href="#orgfc2fdf6">2.3. projectile</a></li>
 </ul>
 </li>
+<li><a href="#org0c18120">3. 我的个人配置</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf2acd60" class="outline-2">
-<h2 id="orgf2acd60"><span class="section-number-2">1</span> 常用工具使用</h2>
+<div id="outline-container-orgb7a2c79" class="outline-2">
+<h2 id="orgb7a2c79"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
-</div>
-<div id="outline-container-org374798f" class="outline-3">
-<h3 id="org374798f"><span class="section-number-3">1.1</span> <a href="./notes/emacs/emacs.html">emacs</a></h3>
-<div class="outline-text-3" id="text-1-1">
 <p>
-常用的编辑器
+EMACS，即Editor MACroS（编辑器宏）的缩写，最初由Richard Stallman(理查德·马修·斯托曼)于1975年在MIT协同Guy Steele共同完成。这一创意的灵感来源于TECMAC和TMACS，它们是由Guy Steele、Dave Moon、Richard Greenblatt、Charles Frankston等人编写的宏文本编辑器。
+</p>
+
+<p>
+<a href="https://www.gnu.org/software/emacs/">官网</a>
 </p>
 </div>
 </div>
 
+<div id="outline-container-org94844cb" class="outline-2">
+<h2 id="org94844cb"><span class="section-number-2">2</span> 个人使用插件</h2>
+<div class="outline-text-2" id="text-2">
+<pre class="example">
+imenu-anywhere
+ac-etags
+counsel-etags
+which-key
+undo-tree
+neotree
+swiper
+ivy
+magit
+counsel-projectile
+projectile
+</pre>
+</div>
 
-<div id="outline-container-orged1de70" class="outline-3">
-<h3 id="orged1de70"><span class="section-number-3">1.2</span> <a href="./notes/graphviz/graphviz.html">graphviz</a></h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-org00231ce" class="outline-3">
+<h3 id="org00231ce"><span class="section-number-3">2.1</span> which-key</h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
-Graphviz(Graph Visualization Software的缩写)是一个由AT&amp;T实验室启动的开源工具包，用于绘制DOT语言脚本描述的图形。它也提供了供其它软件使用的库。Graphviz是大名鼎鼎的贝尔实验室的几位牛人开发的一个画图工具。它的理念和一般的“所见即所得”的画图工具不一样，是“所想即所得”。Graphviz提供了dot语言来编写绘本。
+按键提示插件
+</p>
+<pre class="example">
+(which-key-mode 1)
+(which-key-set-side-window-right) ;;右侧显示
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgd5ab88f" class="outline-3">
+<h3 id="orgd5ab88f"><span class="section-number-3">2.2</span> undo-tree</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+撤回功能扩展插件，可以看最近编辑的历史记录
 </p>
 </div>
 </div>
+
+<div id="outline-container-orgfc2fdf6" class="outline-3">
+<h3 id="orgfc2fdf6"><span class="section-number-3">2.3</span> projectile</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+项目管理插件，可以方便的查找项目下面的文件，只要在项目root的地方创建一个空文件，名字叫*.projectile*。
+</p>
+<pre class="example">
+(projectile-global-mode)
+;;保存缓存
+(setq projectile-enable-caching t)
+;;绑定F6快捷键，快速查找文件
+(global-set-key [f6] 'counsel-projectile-find-file) 
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0c18120" class="outline-2">
+<h2 id="org0c18120"><span class="section-number-2">3</span> <a href="../../emacs/config/init.el">我的个人配置</a></h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: shouchengcheng</p>
-<p class="date">Created: 2020-01-09 四 13:03</p>
+<p class="date">Created: 2020-01-09 四 13:05</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
