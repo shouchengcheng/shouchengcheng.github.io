@@ -1,0 +1,11 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./css/worg.css" />
+
+#+TITLE: 简介
+
+* 寿成承
+
+- 杭州师范大学 电子信息工程 （09-13）
+- 杭州安鸿科技有限公司 嵌入式工程师 （13-14）
+- 杭州博联智能科技股份有限公司 TOIC嵌入式主管 （14-至今）
+
+

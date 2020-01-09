@@ -1,0 +1,13 @@
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../css/worg.css" />
+
+#+TITLE: 笔记
+
+* 环境搭建
+
+* 编程语言学习
+
+* 原理知识
+
+* 刷题记录
+
+* 个人感想
