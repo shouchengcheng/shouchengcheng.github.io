@@ -1,0 +1,1433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-01-12 日 17:38 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rust编程之道</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="shouchengcheng" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../../css/worg.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Rust编程之道</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf15082d">1. 历史</a></li>
+<li><a href="#org47528a8">2. 语言精要</a>
+<ul>
+<li><a href="#orgcf9cb1c">2.1. Rust语言的基本构成</a>
+<ul>
+<li><a href="#org9bb646a">2.1.1. 语言规范</a></li>
+<li><a href="#org9b78ff7">2.1.2. 编译器</a></li>
+<li><a href="#orgce3a84d">2.1.3. 核心库</a></li>
+<li><a href="#org7299fa7">2.1.4. 标准库</a></li>
+<li><a href="#orgcb970f6">2.1.5. 包管理器</a></li>
+</ul>
+</li>
+<li><a href="#org7c9076d">2.2. 语句和表达式</a></li>
+<li><a href="#org7e0acfd">2.3. 变量与绑定</a>
+<ul>
+<li><a href="#org98e76d6">2.3.1. 位置表达式和值表达式</a></li>
+<li><a href="#orgc2d8952">2.3.2. 不可变绑定和可变绑定</a></li>
+<li><a href="#orgaa1a5b4">2.3.3. 所有权与引用</a></li>
+</ul>
+</li>
+<li><a href="#org6abdbdc">2.4. 函数与闭包</a>
+<ul>
+<li><a href="#org8a552c8">2.4.1. 函数定义</a></li>
+<li><a href="#orge950ee8">2.4.2. 作用域与生命周期</a></li>
+<li><a href="#orgfc72abd">2.4.3. 函数指针</a></li>
+<li><a href="#orgab9608c">2.4.4. CTFE机制</a></li>
+<li><a href="#org9265e90">2.4.5. 闭包</a></li>
+</ul>
+</li>
+<li><a href="#orgf46c0e1">2.5. 流程控制</a>
+<ul>
+<li><a href="#orgf8bd5d2">2.5.1. 条件表达式</a></li>
+<li><a href="#org659d4e7">2.5.2. 循环表达式</a></li>
+<li><a href="#orge8da6db">2.5.3. match表达式与模式匹配</a></li>
+<li><a href="#orgd0a8f24">2.5.4. if let和while let表达式</a></li>
+</ul>
+</li>
+<li><a href="#org86baea2">2.6. 基本数据类型</a></li>
+<li><a href="#org7a7af82">2.7. 复合数据类型</a></li>
+<li><a href="#orgc37edcd">2.8. 常用集合类型</a></li>
+<li><a href="#org8c11f8f">2.9. 智能指针</a></li>
+<li><a href="#orga63d480">2.10. 泛型和trait</a></li>
+<li><a href="#orge1a21fd">2.11. 错误处理</a></li>
+<li><a href="#orge9eb12b">2.12. 表达式优先级</a></li>
+<li><a href="#org33dad74">2.13. 注释与打印</a></li>
+</ul>
+</li>
+<li><a href="#org48d5541">3. 类型系统</a>
+<ul>
+<li><a href="#org3ec82d0">3.1. 通用概念</a>
+<ul>
+<li><a href="#orgca6f5cb">3.1.1. 类型系统的作用</a></li>
+<li><a href="#org5869fa1">3.1.2. 类型系统的分类</a></li>
+<li><a href="#org48123fd">3.1.3. 类型系统与多态性</a></li>
+</ul>
+</li>
+<li><a href="#org4416d56">3.2. Rust类型系统概述</a>
+<ul>
+<li><a href="#org433cc9d">3.2.1. 类型推导</a></li>
+</ul>
+</li>
+<li><a href="#org8b783dd">3.3. 泛型（Generic）</a>
+<ul>
+<li><a href="#org20a9a75">3.3.1. 泛型函数</a></li>
+<li><a href="#orgfe9cff2">3.3.2. 泛型返回值自动推导</a></li>
+</ul>
+</li>
+<li><a href="#org0d03fb1">3.4. 深入trait</a>
+<ul>
+<li><a href="#orgb9060c6">3.4.1. 接口抽象</a></li>
+<li><a href="#orgfa11681">3.4.2. 抽象类型</a></li>
+</ul>
+</li>
+<li><a href="#orge47be58">3.5. 类型转换</a>
+<ul>
+<li><a href="#org1c2c222">3.5.1. deref解引用</a></li>
+<li><a href="#org4327f96">3.5.2. as操作符</a></li>
+<li><a href="#org25368e0">3.5.3. From和Into</a></li>
+</ul>
+</li>
+<li><a href="#org3cb02ae">3.6. 当前trait系统的不足</a></li>
+</ul>
+</li>
+<li><a href="#orgcfa870c">4. 内存管理</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf15082d" class="outline-2">
+<h2 id="orgf15082d"><span class="section-number-2">1</span> 历史</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Rust的出现主要是用来解决两个难题：
+</p>
+<ul class="org-ul">
+<li>很难编写内存安全的代码</li>
+<li>很难编写线程安全的代码</li>
+</ul>
+
+<p>
+设计人员对于这门语言的期望
+</p>
+<ul class="org-ul">
+<li>必须是更加安全、不易崩溃的，尤其是在操作内存时</li>
+<li>不需要有垃圾回收这样的系统</li>
+<li>应该拥有一系列的广泛特效，这些特性之间又不乏一致性。这些特性可以很好地相互协作，从而使该语言更容易编写、维护和调试</li>
+</ul>
+
+<p>
+设计哲学
+</p>
+<ul class="org-ul">
+<li>内存安全</li>
+<li>零成本抽象</li>
+<li>实用性</li>
+</ul>
+
+<p>
+Rust团队维护三个发行分支：稳定版（Stable）、测试版（Beta）和开发版（Nightly）。
+</p>
+
+<p>
+Rust商业用户：
+</p>
+<pre class="example">
+Amazon，使用Rust作为构建工具
+Atlassian，在后端实用Rust
+Dropbox，在前后端均实用了Rust
+Facebook，使用Rust重写了源码管理工具
+Google，在Fuchsia项目中部分实用了Rust
+Microsoft，在Azure IoT网络上部分使用了Rust
+npm，在其核心服务上使用了Rust
+RedHat，使用Rust创建了新的存储系统
+Reddit，使用Rust处理评论
+Twitter，在构建团队中使用Rust
+等等
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org47528a8" class="outline-2">
+<h2 id="org47528a8"><span class="section-number-2">2</span> 语言精要</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orgcf9cb1c" class="outline-3">
+<h3 id="orgcf9cb1c"><span class="section-number-3">2.1</span> Rust语言的基本构成</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-org9bb646a" class="outline-4">
+<h4 id="org9bb646a"><span class="section-number-4">2.1.1</span> 语言规范</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+由Rust语言参考（The Rust Reference）和RFC文档共同构成。
+</p>
+</div>
+
+<ol class="org-ol">
+<li><a id="org053fb2c"></a>Rust语言参考<br />
+<div class="outline-text-5" id="text-2-1-1-1">
+<p>
+是官方团队维护的一份参考文档，包含了三类内容：
+</p>
+<ul class="org-ul">
+<li>对每种语言结构及其用法的描述</li>
+<li>对内存模型、并发模型、链接、调试等内存的描述</li>
+<li>影响语言设计的基本原理和参考</li>
+</ul>
+</div>
+</li>
+
+<li><a id="orgd3f5fd4"></a>RFC文档<br />
+<div class="outline-text-5" id="text-2-1-1-2">
+<p>
+RFC文档是涵盖了语言特性的设计意图、详细设计、优缺点的完整技术方案。
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org9b78ff7" class="outline-4">
+<h4 id="org9b78ff7"><span class="section-number-4">2.1.2</span> 编译器</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+Rust是一门静态编译型语言。Rust官方的编译器叫rustc。
+</p>
+
+<p>
+rustc有如下特点：
+</p>
+<ul class="org-ul">
+<li>rustc是跨平台的应用程序</li>
+<li>rustc支持交叉编译</li>
+<li>rustc使用LLVM作为编译器后端</li>
+<li>rustc是用Rust语言开发的，包含在Rust语言源码中</li>
+<li>rustc对Rust源码进行词法语法分析、静态类型检查，最终将代码翻译为LLVM IR</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgce3a84d" class="outline-4">
+<h4 id="orgce3a84d"><span class="section-number-4">2.1.3</span> 核心库</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p>
+Rust语言的语法由核心库和标准库共同提供的。其中Rust核心库是标准库的基础。核心库中定义的是Rust语言的核心，不依赖于操作系统和网络等相关的库，甚至不知道堆分配，也不提供并发和I/O。
+</p>
+
+<p>
+可以通过在模块顶部引入 <b>#![no<sub>std</sub>]</b> 来使用核心库。
+</p>
+
+<p>
+<b>做嵌入式应用开发的时候，核心库是必须的</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7299fa7" class="outline-4">
+<h4 id="org7299fa7"><span class="section-number-4">2.1.4</span> 标准库</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<p>
+标准库包含的内容大概如下：
+</p>
+<ul class="org-ul">
+<li>与核心库一样的基本trait、原始数据类型、功能型数据类型和常用宏等，以及与核心库几乎完全一致的API</li>
+<li>并发、I/O和运行时</li>
+<li>平台抽象</li>
+<li>底层操作借口</li>
+<li>可选和错误处理类型Option和Result，以及各种迭代器</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgcb970f6" class="outline-4">
+<h4 id="orgcb970f6"><span class="section-number-4">2.1.5</span> 包管理器</h4>
+<div class="outline-text-4" id="text-2-1-5">
+<p>
+把按一定规则组织的多个rs文件编译后得到一个包（Crate）。
+</p>
+
+<p>
+Rust社区的公开第三方包都集中在<a href="https://crates.io">crates.io</a>网站上面，它们的文档被自动发布到<a href="https://docs.rs">docs.rs</a>网站上
+</p>
+
+<p>
+安装好Rust环境之后，可以直接使用Cargo命令来创建包。
+</p>
+<pre class="example">
+cargo new bin_crate
+cargo new --lib lib_crate
+
+cargo build
+cargo run
+...
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7c9076d" class="outline-3">
+<h3 id="org7c9076d"><span class="section-number-3">2.2</span> 语句和表达式</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Rust中的语法可以分为两大类：
+</p>
+<ul class="org-ul">
+<li>语句（Statement），是指要执行的一些操作和产生副作用的表达式
+<ul class="org-ul">
+<li>声明语句（Declaration statement）</li>
+<li>表达式语句（Expression statement）</li>
+</ul></li>
+<li>表达式（Expression），主要用于计算求值</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7e0acfd" class="outline-3">
+<h3 id="org7e0acfd"><span class="section-number-3">2.3</span> 变量与绑定</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+let创建的变量一般称为绑定（Binding），它表明了标识符（Identifier）和值（Value）之间建立的一种关联关系
+</p>
+</div>
+
+<div id="outline-container-org98e76d6" class="outline-4">
+<h4 id="org98e76d6"><span class="section-number-4">2.3.1</span> 位置表达式和值表达式</h4>
+</div>
+<div id="outline-container-orgc2d8952" class="outline-4">
+<h4 id="orgc2d8952"><span class="section-number-4">2.3.2</span> 不可变绑定和可变绑定</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+使用let关键字声明的位置表达式默认不可变，为不可变绑定。需要加上关键字 <b>mut</b> 表示可变绑定
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">a</span> = 1;
+    <span style="color: #5f615c; font-style: italic;">// </span><span style="color: #5f615c; font-style: italic;">a = 2; // immutable and error</span>
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">mub</span> b = 2;
+    b = 3; <span style="color: #5f615c; font-style: italic;">// </span><span style="color: #5f615c; font-style: italic;">mutable</span>
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaa1a5b4" class="outline-4">
+<h4 id="orgaa1a5b4"><span class="section-number-4">2.3.3</span> 所有权与引用</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">place1</span> = <span style="color: #5c3566;">"place1"</span>;
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">place2</span> = <span style="color: #5c3566;">"place2"</span>;
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">other1</span> = place1; <span style="color: #5f615c; font-style: italic;">// </span><span style="color: #5f615c; font-style: italic;">&#25152;&#26377;&#26435;&#65288;OwnerShip&#65289;&#36716;&#31227;&#65292;&#31216;&#20026;&#31227;&#21160;&#65288;Move&#65289;&#35821;&#20041;</span>
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">other2</span> = &amp;place2; <span style="color: #5f615c; font-style: italic;">// </span><span style="color: #5f615c; font-style: italic;">&#24341;&#29992;</span>
+    <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"place1 </span><span style="color: #5c3566; font-style: italic;">{:p}</span><span style="color: #5c3566;"> other1 </span><span style="color: #5c3566; font-style: italic;">{:p}</span><span style="color: #5c3566;">"</span>,place1,other1);
+    <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"place2 </span><span style="color: #5c3566; font-style: italic;">{:p}</span><span style="color: #5c3566;"> other2 </span><span style="color: #5c3566; font-style: italic;">{:p}</span><span style="color: #5c3566;">"</span>,place2,*other2);
+    <span style="color: #75507b;">assert_eq!</span>(place1,other1);
+    <span style="color: #75507b;">assert_eq!</span>(place2,*other2);
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6abdbdc" class="outline-3">
+<h3 id="org6abdbdc"><span class="section-number-3">2.4</span> 函数与闭包</h3>
+<div class="outline-text-3" id="text-2-4">
+</div>
+<div id="outline-container-org8a552c8" class="outline-4">
+<h4 id="org8a552c8"><span class="section-number-4">2.4.1</span> 函数定义</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+函数是通过关键字 <b>fn</b> 定义的
+</p>
+</div>
+</div>
+<div id="outline-container-orge950ee8" class="outline-4">
+<h4 id="orge950ee8"><span class="section-number-4">2.4.2</span> 作用域与生命周期</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+Rust语言的作用域是静态作用域，即词法作用域（Lexical Scope）。由一对花括号来开辟作用域，其中用域在词法分析阶段就已经确定了，不会动态改变。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">v</span> = <span style="color: #5c3566;">"hello world!"</span>;
+    <span style="color: #75507b;">assert_eq!</span>(v, <span style="color: #5c3566;">"hello world!"</span>);
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">v</span> = <span style="color: #5c3566;">"hello rust!"</span>;
+    <span style="color: #75507b;">assert_eq!</span>(v, <span style="color: #5c3566;">"hello rust!"</span>);
+    { <span style="color: #5f615c; font-style: italic;">// </span><span style="color: #5f615c; font-style: italic;">&#21464;&#37327;&#23631;&#34109;&#65288;Variable Shadow&#65289;</span>
+        <span style="color: #346604;">let</span> <span style="color: #b35000;">v</span> = <span style="color: #5c3566;">"hello world!"</span>;
+        <span style="color: #75507b;">asser_eq!</span>(v, <span style="color: #5c3566;">"hello world!"</span>);
+    }
+    <span style="color: #75507b;">assert_eq!</span>(v <span style="color: #5c3566;">"hello rust!"</span>);
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfc72abd" class="outline-4">
+<h4 id="orgfc72abd"><span class="section-number-4">2.4.3</span> 函数指针</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+函数自身可以作为函数的参数和返回值使用
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">pub</span> <span style="color: #346604;">fn</span> <span style="color: #a40000;">math</span>(<span style="color: #b35000;">op</span>: <span style="color: #346604;">fn</span>(<span style="color: #204a87;">i32</span>, <span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">i32</span>, <span style="color: #b35000;">a</span>: <span style="color: #204a87;">i32</span>, <span style="color: #b35000;">b</span>: <span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">i32</span> {
+    op(a, b)
+}
+
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">sum</span>(<span style="color: #b35000;">a</span>: <span style="color: #204a87;">i32</span>, <span style="color: #b35000;">b</span>: <span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">i32</span> {
+    a + b
+}
+
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">product</span>(<span style="color: #b35000;">a</span>: <span style="color: #204a87;">i32</span>, <span style="color: #b35000;">b</span>: <span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">i32</span> {
+    a * b
+}
+
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">a</span> = 2;
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">b</span> = 3;
+    <span style="color: #75507b;">assert_eq!</span>(math(sum, a, b), 5);
+    <span style="color: #75507b;">assert_eq!</span>(math(product, a, b), 6);
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">is_true</span>() -&gt; <span style="color: #204a87;">bool</span> { <span style="color: #346604;">true</span>}
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">true_maker</span>() -&gt; <span style="color: #346604;">fn</span>() -&gt; <span style="color: #204a87;">bool</span>{is_true}
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #75507b;">assert_eq!</span>(true_maker()(), <span style="color: #346604;">true</span>);
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgab9608c" class="outline-4">
+<h4 id="orgab9608c"><span class="section-number-4">2.4.4</span> CTFE机制</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<p>
+Rust编译器也可以像C++和D语言那样，拥有编译时函数执行（Compile-Time Function Execution，CTFE）的能力
+</p>
+
+<p>
+Rust 2018版本已经集成进去，2015版的时候，需要加 <b>#![feature (const<sub>fn</sub>)]</b> 特性（使用Nightly版本）
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">const</span> <span style="color: #346604;">fn</span> <span style="color: #a40000;">init_len</span>() -&gt; <span style="color: #204a87;">usize</span> {
+    <span style="color: #346604;">return</span> 5;
+}
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">arr</span> = [0; init_len()];
+    <span style="color: #5f615c; font-style: italic;">// </span><span style="color: #5f615c; font-style: italic;">init_len&#24517;&#39035;&#22312;&#32534;&#35793;&#26399;&#27714;&#20540;&#65292;&#36825;&#23601;&#26159;CTFE&#30340;&#33021;&#21147;</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9265e90" class="outline-4">
+<h4 id="org9265e90"><span class="section-number-4">2.4.5</span> 闭包</h4>
+<div class="outline-text-4" id="text-2-4-5">
+<p>
+闭包也叫匿名函数，具有以下特点：
+</p>
+<ul class="org-ul">
+<li>可以像函数一样被调用</li>
+<li>可以捕获上下文环境中的自由变量</li>
+<li>可以自动推断输入和返回的类型</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">out</span> = 42;
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">add</span>(<span style="color: #b35000;">i</span>: <span style="color: #204a87;">i32</span>, <span style="color: #b35000;">j</span>: <span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">i32</span> {
+        i + j
+    }
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">closure_annotated</span> = |<span style="color: #b35000;">i</span>: <span style="color: #204a87;">i32</span>, <span style="color: #b35000;">j</span>: <span style="color: #204a87;">i32</span>| -&gt; <span style="color: #204a87;">i32</span> { i + j + out };
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">closure_inferred</span> = |i, j| i + j + out;
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">i</span> = 1;
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">j</span> = 2;
+    <span style="color: #75507b;">assert_eq!</span>(3, add(i, j));
+    <span style="color: #75507b;">assert_eq!</span>(45, closure_annotated(i, j));
+    <span style="color: #75507b;">assert_eq!</span>(45, closure_inferred(i, j));
+}
+</pre>
+</div>
+<p>
+闭包和函数有一个重要的区别，那就是闭包可以捕获外部变量，而函数不可以。
+</p>
+
+<p>
+闭包作为参数的情况
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">closure_math</span>&lt;<span style="color: #b35000;">F</span>:<span style="color: #204a87;">Fn</span>()-&gt;<span style="color: #204a87;">i32</span>&gt;(<span style="color: #b35000;">op</span>:<span style="color: #204a87;">F</span>)-&gt;<span style="color: #204a87;">i32</span>{
+    op()
+}
+
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #346604;">let</span> a=2;
+    <span style="color: #346604;">let</span> b=3;
+    <span style="color: #75507b;">assert_eq!</span>(closure_math(|| a+b),5);
+    <span style="color: #75507b;">assert_eq!</span>(closure_math(|| a*b),6);
+}
+</pre>
+</div>
+<p>
+closure<sub>math其参数是一个泛型F</sub>，并且该泛型受Fn()-&gt;i32 trait的限定
+</p>
+
+<p>
+闭包作为返回值
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">two_times_impl</span>() -&gt; <span style="color: #346604;">impl</span> <span style="color: #204a87;">Fn</span>(<span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">i32</span>{
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">i</span> = 2;
+    <span style="color: #346604;">move</span> |j| j*i
+}
+
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">result</span> = two_times_impl();
+    <span style="color: #75507b;">assert_eq!</span>(result(2), 4);
+}
+</pre>
+</div>
+<p>
+使用move关键字，将捕获变量地所有权转移到闭包中，就不会按引用进行捕获变量，这样闭包才可以安全地返回
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf46c0e1" class="outline-3">
+<h3 id="orgf46c0e1"><span class="section-number-3">2.5</span> 流程控制</h3>
+<div class="outline-text-3" id="text-2-5">
+</div>
+<div id="outline-container-orgf8bd5d2" class="outline-4">
+<h4 id="orgf8bd5d2"><span class="section-number-4">2.5.1</span> 条件表达式</h4>
+<div class="outline-text-4" id="text-2-5-1">
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">n</span> = 13;
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">big_n</span> = <span style="color: #346604;">if</span> (n &lt; 10 &amp;&amp; n &gt; -10) {
+        10 * n
+    }<span style="color: #346604;">else</span> {
+        n / 2 <span style="color: #5f615c; font-style: italic;">// </span><span style="color: #5f615c; font-style: italic;">&#22240;&#20026;&#31867;&#22411;&#24050;&#32463;&#26159;i32&#65292;&#25152;&#20197;&#23567;&#25968;&#37096;&#20998;&#20250;&#34987;&#32534;&#35793;&#22120;&#25130;&#21435;</span>
+    };
+    <span style="color: #75507b;">assert_eq!</span>(big_n, 6);
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org659d4e7" class="outline-4">
+<h4 id="org659d4e7"><span class="section-number-4">2.5.2</span> 循环表达式</h4>
+<div class="outline-text-4" id="text-2-5-2">
+<ul class="org-ul">
+<li>while</li>
+<li>loop</li>
+<li>for&#x2026;in，本质上是一个迭代器</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">for</span> <span style="color: #b35000;">n</span> <span style="color: #346604;">in</span> 1..101 {
+        <span style="color: #346604;">if</span> n % 15 == 0 {
+            <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"fizzbuzz"</span>);
+        }<span style="color: #346604;">else</span> <span style="color: #346604;">if</span> n % 3 == 0 {
+            <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"fizz"</span>);
+        }<span style="color: #346604;">else</span> <span style="color: #346604;">if</span> n % 5 == 0 {
+            <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"buzz"</span>);
+        }<span style="color: #346604;">else</span> {
+            <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"</span><span style="color: #5c3566; font-style: italic;">{}</span><span style="color: #5c3566;">"</span>, n);
+        }
+    }
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">while_true</span>(<span style="color: #b35000;">x</span>:<span style="color: #204a87;">i32</span>)-&gt;<span style="color: #204a87;">i32</span>{
+    <span style="color: #346604;">while</span> <span style="color: #346604;">true</span>{
+        <span style="color: #346604;">return</span> x+1;
+    }
+    x
+}
+
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">y</span> = while_true(5);
+    <span style="color: #75507b;">assert_eq!</span>(y,6);
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge8da6db" class="outline-4">
+<h4 id="orge8da6db"><span class="section-number-4">2.5.3</span> match表达式与模式匹配</h4>
+<div class="outline-text-4" id="text-2-5-3">
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">number</span> = 42;
+    <span style="color: #346604;">match</span> number {
+        0 =&gt; <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"Origin"</span>),
+        1...3 =&gt; <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"A11"</span>),
+        | 5 | 7 | 13 =&gt; <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"Bad Luck"</span>),
+        n @ 42 =&gt; <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"Answer is </span><span style="color: #5c3566; font-style: italic;">{}</span><span style="color: #5c3566;">"</span>, n), <span style="color: #5f615c; font-style: italic;">// </span><span style="color: #5f615c; font-style: italic;">@&#21487;&#20197;&#23558;&#27169;&#24335;&#20013;&#30340;&#20540;&#32465;&#23450;&#32473;&#19968;&#20010;&#21464;&#37327;</span>
+        _ =&gt; <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"Common"</span>),
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd0a8f24" class="outline-4">
+<h4 id="orgd0a8f24"><span class="section-number-4">2.5.4</span> if let和while let表达式</h4>
+<div class="outline-text-4" id="text-2-5-4">
+<p>
+使用if let表达式
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">boolean</span> = <span style="color: #346604;">true</span>;
+    <span style="color: #346604;">let</span> <span style="color: #346604;">mut</span> <span style="color: #b35000;">binary</span> = 0;
+    <span style="color: #346604;">if</span> <span style="color: #346604;">let</span> <span style="color: #346604;">true</span> = boolean {
+        binary = 1;
+    }
+    <span style="color: #75507b;">assert_eq!</span>(binary, 1);
+}
+</pre>
+</div>
+
+<p>
+使用match表达式
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>(){
+    <span style="color: #346604;">let</span> <span style="color: #346604;">mut</span> <span style="color: #b35000;">v</span> = <span style="color: #75507b;">vec!</span>[1,2,3,4,5];
+    <span style="color: #346604;">loop</span> {
+        <span style="color: #346604;">match</span> v.pop() {
+            <span style="color: #204a87;">Some</span>(x) =&gt; <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"</span><span style="color: #5c3566; font-style: italic;">{}</span><span style="color: #5c3566;">"</span>, x),
+            <span style="color: #204a87;">None</span> =&gt; <span style="color: #346604;">break</span>, <span style="color: #5f615c; font-style: italic;">// </span><span style="color: #5f615c; font-style: italic;">&#36339;&#20986;&#24490;&#29615;</span>
+        }
+    }
+}
+</pre>
+</div>
+
+<p>
+使用while let表达式
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> <span style="color: #346604;">mut</span> <span style="color: #b35000;">v</span> = <span style="color: #75507b;">vec!</span>[1,2,3,4,5];
+    <span style="color: #346604;">while</span> <span style="color: #346604;">let</span> <span style="color: #204a87;">Some</span>(x) = v.pop() {
+        <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"</span><span style="color: #5c3566; font-style: italic;">{}</span><span style="color: #5c3566;">"</span>, x);
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org86baea2" class="outline-3">
+<h3 id="org86baea2"><span class="section-number-3">2.6</span> 基本数据类型</h3>
+<div class="outline-text-3" id="text-2-6">
+<ul class="org-ul">
+<li>布尔类型
+<ul class="org-ul">
+<li>bool（true,false）</li>
+</ul></li>
+<li>基本数字类型
+<ul class="org-ul">
+<li>固定大小
+<ul class="org-ul">
+<li>u8,u16,u32,u64,u128</li>
+<li>i8,i16,i32,i64,i128</li>
+</ul></li>
+<li>动态大小，取决于机器的字长
+<ul class="org-ul">
+<li>usize</li>
+<li>isize</li>
+</ul></li>
+<li>浮点数
+<ul class="org-ul">
+<li>f32,f64</li>
+</ul></li>
+</ul></li>
+<li>字符类型，Char</li>
+<li>数组类型，Array，数组的特点
+<ul class="org-ul">
+<li>数组大小固定</li>
+<li>元素均为同类型</li>
+<li>默认不可变</li>
+</ul></li>
+<li>范围类型，Range
+<ul class="org-ul">
+<li>1..5 =&gt; [1,5) =&gt; 1,2,3,4</li>
+<li>1..=5 =&gt; [1,5] =&gt; 1,2,3,4,5</li>
+</ul></li>
+<li>切片类型，Slice，用[T]类型表示连续序列，那么切片类型就是&amp;[T]和&amp;mut[T]</li>
+<li>str字符串类型</li>
+<li>指针，可以表示内存地址的类型称为指针
+<ul class="org-ul">
+<li>引用（Reference）</li>
+<li>原生指针（Raw Pointer），主要用于Unsafe Rust中</li>
+<li>函数指针（fn Pointer）</li>
+<li>智能指针（Smart Pointer）</li>
+</ul></li>
+</ul>
+
+<p>
+原生指针实例
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> <span style="color: #346604;">mut</span> <span style="color: #b35000;">x</span> = 10;
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">ptr_x</span> = &amp;<span style="color: #346604;">mut</span> x <span style="color: #346604;">as</span> *<span style="color: #346604;">mut</span> <span style="color: #204a87;">i32</span>;
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">y</span> = <span style="color: #204a87;">Box</span>::new(20);
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">ptr_y</span> = &amp;*y <span style="color: #346604;">as</span> *<span style="color: #346604;">const</span> <span style="color: #204a87;">i32</span>;
+    <span style="color: #a40000;">unsafe</span> {
+        *ptr_x += *ptr_y;
+    }
+    <span style="color: #75507b;">assert_eq!</span>(x, 30);
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7a7af82" class="outline-3">
+<h3 id="org7a7af82"><span class="section-number-3">2.7</span> 复合数据类型</h3>
+<div class="outline-text-3" id="text-2-7">
+<ul class="org-ul">
+<li>元组（Tuple），是一种异构有限序列，形如（T,U,M,N)</li>
+<li>结构体（Struct）
+<ul class="org-ul">
+<li>具名结构体（Named-Field Struct）</li>
+<li>元组结构体（Tuple-Like Struct）</li>
+<li>单元结构体（Unit-Like Struct）</li>
+</ul></li>
+<li>枚举体（Enum）
+<ul class="org-ul">
+<li>无参数枚举体</li>
+<li>类C枚举体</li>
+<li>携带类型参数的枚举体</li>
+</ul></li>
+<li>联合体（Union）</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc37edcd" class="outline-3">
+<h3 id="orgc37edcd"><span class="section-number-3">2.8</span> 常用集合类型</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+Rust标准库std::collections模块下有4种通用集合类型
+</p>
+<ul class="org-ul">
+<li>线性序列
+<ul class="org-ul">
+<li>向量（Vec）</li>
+<li>双端队列（VecDeque）</li>
+<li>链表（LinkedList）</li>
+</ul></li>
+<li>Key-Value映射表
+<ul class="org-ul">
+<li>无序哈希表（HashMap）</li>
+<li>有序哈希表（BTreeMap）</li>
+</ul></li>
+<li>集合类型
+<ul class="org-ul">
+<li>无序集合（HashSet）</li>
+<li>有序集合（BTreeSet）</li>
+</ul></li>
+<li>优先队列
+<ul class="org-ul">
+<li>二叉堆（BinaryHeap）</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8c11f8f" class="outline-3">
+<h3 id="org8c11f8f"><span class="section-number-3">2.9</span> 智能指针</h3>
+<div class="outline-text-3" id="text-2-9">
+<p>
+它源自C++，Rust将其引入，并使之成为Rust语言中最重要的一种数据结构。
+</p>
+
+<p>
+Box&lt;T&gt;是指向类型为T的堆内存分配值的智能指针。当Box&lt;T&gt;超出作用域范围时，将调用其析构函数，销毁内部对象，并自动释放堆中的内存。
+</p>
+
+<p>
+Box&lt;T&gt;在堆内存中分配值的实例：
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #75507b;">#[derive(PartialEq,Debug)]</span>
+    <span style="color: #346604;">struct</span> <span style="color: #204a87;">Point</span> {
+        <span style="color: #b35000;">x</span>:<span style="color: #204a87;">f64</span>,
+        <span style="color: #b35000;">y</span>:<span style="color: #204a87;">f64</span>,
+    }
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">box_point</span> = <span style="color: #204a87;">Box</span>::new(<span style="color: #204a87;">Point</span>{<span style="color: #b35000;">x</span>:0.0,<span style="color: #b35000;">y</span>:0.0});
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">unboxed_point</span>:<span style="color: #204a87;">Point</span> = *box_point;
+    <span style="color: #75507b;">assert_eq!</span>(unboxed_point, <span style="color: #204a87;">Point</span>{<span style="color: #b35000;">x</span>:0.0,<span style="color: #b35000;">y</span>:0.0});
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga63d480" class="outline-3">
+<h3 id="orga63d480"><span class="section-number-3">2.10</span> 泛型和trait</h3>
+<div class="outline-text-3" id="text-2-10">
+<p>
+Rust标准库中定义了很多泛型类型，包括Option&lt;T&gt;、Vec&lt;T&gt;、HashMap&lt;K,V&gt;以及Box&lt;T&gt;等。
+</p>
+
+<p>
+trait是借鉴了Haskell的Typeclass。trait是对类型行为的抽象。
+</p>
+<ul class="org-ul">
+<li>trait是Rust唯一的接口抽象方式</li>
+<li>可以静态生成，也可以动态调用</li>
+<li>可以当作标记类型拥有某些特定行为的标签来使用</li>
+</ul>
+
+<p>
+trait实例：
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">struct</span> <span style="color: #204a87;">Duck</span>;
+<span style="color: #346604;">struct</span> <span style="color: #204a87;">Pig</span>;
+
+<span style="color: #346604;">trait</span> <span style="color: #204a87;">Fly</span>{
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">fly</span>(&amp;<span style="color: #346604;">self</span>)-&gt;<span style="color: #204a87;">bool</span>;
+}
+
+<span style="color: #346604;">impl</span> <span style="color: #204a87;">Fly</span> <span style="color: #346604;">for</span> <span style="color: #204a87;">Duck</span> {
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">fly</span>(&amp;<span style="color: #346604;">self</span>) -&gt;<span style="color: #204a87;">bool</span> {
+        <span style="color: #346604;">return</span> <span style="color: #346604;">true</span>;
+    }
+}
+<span style="color: #346604;">impl</span> <span style="color: #204a87;">Fly</span> <span style="color: #346604;">for</span> <span style="color: #204a87;">Pig</span> {
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">fly</span>(&amp;<span style="color: #346604;">self</span>) -&gt;<span style="color: #204a87;">bool</span> {
+        <span style="color: #346604;">return</span> <span style="color: #346604;">false</span>;
+    }
+}
+
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">fly_static</span>&lt;<span style="color: #b35000;">T</span>:<span style="color: #204a87;">Fly</span>&gt;(<span style="color: #b35000;">s</span>:<span style="color: #204a87;">T</span>)-&gt;<span style="color: #204a87;">bool</span> {
+    s.fly()
+}
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">fly_dyn</span>(<span style="color: #b35000;">s</span>:&amp;<span style="color: #204a87;">Fly</span>)-&gt;<span style="color: #204a87;">bool</span> {
+    s.fly()
+}
+
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">pig</span> = <span style="color: #204a87;">Pig</span>;
+    <span style="color: #75507b;">assert_eq!</span>(fly_static::&lt;<span style="color: #204a87;">Pig</span>&gt;(pig),<span style="color: #346604;">false</span>);
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">duck</span> = <span style="color: #204a87;">Duck</span>;
+    <span style="color: #75507b;">assert_eq!</span>(fly_static::&lt;<span style="color: #204a87;">Duck</span>&gt;(duck),<span style="color: #346604;">true</span>);
+    <span style="color: #75507b;">assert_eq!</span>(fly_dyn(&amp;<span style="color: #204a87;">Pig</span>),<span style="color: #346604;">false</span>);
+    <span style="color: #75507b;">assert_eq!</span>(fly_dyn(&amp;<span style="color: #204a87;">Duck</span>),<span style="color: #346604;">true</span>);
+}
+</pre>
+</div>
+
+<p>
+实现Debug trait
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">use</span> <span style="color: #204a87; font-weight: bold;">std</span>::<span style="color: #204a87; font-weight: bold;">fmt</span>::*;
+<span style="color: #346604;">struct</span> <span style="color: #204a87;">Point</span> {
+    <span style="color: #b35000;">x</span>:<span style="color: #204a87;">i32</span>,
+    <span style="color: #b35000;">y</span>:<span style="color: #204a87;">i32</span>,
+}
+<span style="color: #346604;">impl</span> <span style="color: #204a87;">Debug</span> <span style="color: #346604;">for</span> <span style="color: #204a87;">Point</span> {
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">fmt</span>(&amp;<span style="color: #346604;">self</span>, <span style="color: #b35000;">f</span>: &amp;<span style="color: #346604;">mut</span> <span style="color: #204a87;">Formatter</span>) -&gt; <span style="color: #204a87;">Result</span> {
+        <span style="color: #75507b;">write!</span>(f, <span style="color: #5c3566;">"Point {{x: </span><span style="color: #5c3566; font-style: italic;">{}</span><span style="color: #5c3566;">, y: </span><span style="color: #5c3566; font-style: italic;">{}</span><span style="color: #5c3566;">}}"</span>, <span style="color: #346604;">self</span>.x, <span style="color: #346604;">self</span>.y)
+    }
+}
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">origin</span> = <span style="color: #204a87;">Point</span> {<span style="color: #b35000;">x</span>:0,<span style="color: #b35000;">y</span>:0};
+    <span style="color: #75507b;">println!</span>(<span style="color: #5c3566;">"The origin is: </span><span style="color: #5c3566; font-style: italic;">{:?}</span><span style="color: #5c3566;">"</span>, origin);
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge1a21fd" class="outline-3">
+<h3 id="orge1a21fd"><span class="section-number-3">2.11</span> 错误处理</h3>
+<div class="outline-text-3" id="text-2-11">
+<p>
+Rust中的错误处理是通过返回Result&lt;T,E&gt;类型的方式进行的。Result&lt;T,E&gt;类型是Option&lt;T&gt;类型的升级版本，同样定义于标准库中。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">x</span>:<span style="color: #204a87;">Result</span>&lt;<span style="color: #204a87;">i32</span>, &amp;<span style="color: #204a87;">str</span>&gt; = <span style="color: #204a87;">Ok</span>(-3);
+    <span style="color: #75507b;">assert_eq!</span>(x.is_ok(), <span style="color: #346604;">true</span>);
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">x</span>:<span style="color: #204a87;">Result</span>&lt;<span style="color: #204a87;">i32</span>, &amp;<span style="color: #204a87;">str</span>&gt; = <span style="color: #204a87;">Err</span>(<span style="color: #5c3566;">"Some error message"</span>);
+    <span style="color: #75507b;">assert_eq!</span>(x.is_ok(), <span style="color: #346604;">false</span>);
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge9eb12b" class="outline-3">
+<h3 id="orge9eb12b"><span class="section-number-3">2.12</span> 表达式优先级</h3>
+<div class="outline-text-3" id="text-2-12">
+<p>
+略
+</p>
+</div>
+</div>
+<div id="outline-container-org33dad74" class="outline-3">
+<h3 id="org33dad74"><span class="section-number-3">2.13</span> 注释与打印</h3>
+<div class="outline-text-3" id="text-2-13">
+<ul class="org-ul">
+<li>普通的注释
+<ul class="org-ul">
+<li>使用//对整行注释</li>
+<li>使用/*&#x2026;*/对区块注释</li>
+</ul></li>
+<li>文档注释，内部支持Markdown标记，也支持对文档中的示例代码进行测试，可以使用rustdoc工具生成HTML文档
+<ul class="org-ul">
+<li>使用///注释可以生成库文档，一般用于函数或结构体的说明，置于说明对象的上方</li>
+<li>使用//!也可以生成库文档，一般用于说明整个模块的功能，置于模块文件的头部</li>
+</ul></li>
+</ul>
+
+<p>
+println!宏中的格式化形式列表：
+</p>
+<ul class="org-ul">
+<li>nothing代表Display，println!("{}",2)</li>
+<li>?代表Debug，println!("{:?}",2)</li>
+<li>o代表八进制，println!("{:o}",2)</li>
+<li>x代表十六进制，println!("{:x}",2)</li>
+<li>X代表十六进制大写，println!("{:X}",2)</li>
+<li>p代表指针，println!("{:p}",2)</li>
+<li>b代表二进制，println!("{:b}",2)</li>
+<li>e代表指数小写，println!("{:e}",2)</li>
+<li>E代表指数大写，println!("{:E}",2)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org48d5541" class="outline-2">
+<h2 id="org48d5541"><span class="section-number-2">3</span> 类型系统</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org3ec82d0" class="outline-3">
+<h3 id="org3ec82d0"><span class="section-number-3">3.1</span> 通用概念</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+所谓类型，其实就是对表示信息的值进行的细粒度的区分。
+</p>
+</div>
+<div id="outline-container-orgca6f5cb" class="outline-4">
+<h4 id="orgca6f5cb"><span class="section-number-4">3.1.1</span> 类型系统的作用</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+类型系统的优势
+</p>
+<ul class="org-ul">
+<li>排查错误</li>
+<li>抽象</li>
+<li>文档</li>
+<li>优化效率</li>
+<li>类型安全
+<ul class="org-ul">
+<li>类型安全的语言可以避免类型间的无效计算</li>
+<li>类型安全的语言还可以保证内存安全，避免诸如空指针、悬垂指针和缓存区溢出等导致的内存安全问题</li>
+<li>类型安全的语言也可以避免语义上的逻辑错误</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5869fa1" class="outline-4">
+<h4 id="org5869fa1"><span class="section-number-4">3.1.2</span> 类型系统的分类</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+在编译期进行类型检查的语言属于静态类型，在运行期进行类型检查的语言属于动态类型。如果一门语言不允许类型的自动隐式转换，在强制转换前不同类型无法进行计算，则该语言属于强类型，反之则属于弱类型。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org48123fd" class="outline-4">
+<h4 id="org48123fd"><span class="section-number-4">3.1.3</span> 类型系统与多态性</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<p>
+如果一个类型系统允许一段代码在不同的上下文中具有不同的类型，这样的类型系统就叫作多态类型系统。
+</p>
+
+<p>
+现代编程语言包含三种多态形式：
+</p>
+<ul class="org-ul">
+<li>参数化多态（Parametric polymorphism）</li>
+<li>Ad-hoc多态（Ad-hoc polymorphism）</li>
+<li>子类型多态（Subtype polymorphism）</li>
+</ul>
+
+<p>
+按多态发生时间来划分：
+</p>
+<ul class="org-ul">
+<li>静多态（Static polymorphism）</li>
+<li>动多态（Dynamic polymorphism）</li>
+</ul>
+
+<p>
+Rust同时支持静多态和动多态，静多态就是一种零成本的抽象。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4416d56" class="outline-3">
+<h3 id="org4416d56"><span class="section-number-3">3.2</span> Rust类型系统概述</h3>
+<div class="outline-text-3" id="text-3-2">
+</div>
+<div id="outline-container-org433cc9d" class="outline-4">
+<h4 id="org433cc9d"><span class="section-number-4">3.2.1</span> 类型推导</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+类型推导
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">sum</span>(<span style="color: #b35000;">a</span>:<span style="color: #204a87;">u32</span>, <span style="color: #b35000;">b</span>:<span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">u32</span> {
+    a + (b <span style="color: #346604;">as</span> <span style="color: #204a87;">u32</span>)
+}
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">a</span> = 1;
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">b</span> = 2;
+    <span style="color: #75507b;">assert_eq!</span>(sum(a,b),3);
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">elem</span> = 5u8;
+    <span style="color: #346604;">let</span> <span style="color: #346604;">mut</span> <span style="color: #b35000;">vec</span> = <span style="color: #204a87;">Vec</span>::new();
+    vec.push(elem);
+    <span style="color: #75507b;">assert_eq!</span>(vec, [5]);
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org8b783dd" class="outline-3">
+<h3 id="org8b783dd"><span class="section-number-3">3.3</span> 泛型（Generic）</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+泛型是一种参数化多态
+</p>
+</div>
+<div id="outline-container-org20a9a75" class="outline-4">
+<h4 id="org20a9a75"><span class="section-number-4">3.3.1</span> 泛型函数</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">foo</span>&lt;<span style="color: #204a87;">T</span>&gt;(<span style="color: #b35000;">x</span>:<span style="color: #204a87;">T</span>) -&gt; <span style="color: #204a87;">T</span> {
+    <span style="color: #346604;">return</span> x;
+}
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #75507b;">assert_eq!</span>(foo(1),1);
+    <span style="color: #75507b;">assert_eq!</span>(foo(<span style="color: #5c3566;">"hello"</span>),<span style="color: #5c3566;">"hello"</span>);
+}
+</pre>
+</div>
+
+<p>
+编译期单态化的泛型函数
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">fn</span> <span style="color: #a40000;">foo_1</span>(<span style="color: #b35000;">x</span>: <span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">i32</span> {
+    <span style="color: #346604;">return</span> x;
+}
+
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">foo_2</span>(<span style="color: #b35000;">x</span>: &amp;'<span style="color: #346604;">static</span> <span style="color: #204a87;">str</span>) -&gt; &amp;'<span style="color: #346604;">static</span> <span style="color: #204a87;">str</span> {
+    <span style="color: #346604;">return</span> x;
+}
+
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    foo_1(1);
+    foo_2(<span style="color: #5c3566;">"2"</span>);
+}
+</pre>
+</div>
+<p>
+单态化静态分发的好处是性能好，没有运行时开销；缺点是容易造成编译后生成的二进制文件膨胀。
+</p>
+</div>
+</div>
+<div id="outline-container-orgfe9cff2" class="outline-4">
+<h4 id="orgfe9cff2"><span class="section-number-4">3.3.2</span> 泛型返回值自动推导</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #75507b;">#[derive(Debug, PartialEq)]</span>
+<span style="color: #346604;">struct</span> <span style="color: #204a87;">Foo</span>(<span style="color: #204a87;">i32</span>);
+<span style="color: #75507b;">#[derive(Debug, PartialEq)]</span>
+<span style="color: #346604;">struct</span> <span style="color: #204a87;">Bar</span>(<span style="color: #204a87;">i32</span>, <span style="color: #204a87;">i32</span>);
+<span style="color: #346604;">trait</span> <span style="color: #204a87;">Inst</span> {
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">new</span>(<span style="color: #b35000;">i</span>: <span style="color: #204a87;">i32</span>)-&gt; <span style="color: #204a87;">Self</span>;
+}
+
+<span style="color: #346604;">impl</span> <span style="color: #204a87;">Inst</span> <span style="color: #346604;">for</span> <span style="color: #204a87;">Foo</span> {
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">new</span>(<span style="color: #b35000;">i</span>: <span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">Foo</span> {
+        <span style="color: #204a87;">Foo</span>(i)
+    }
+}
+<span style="color: #346604;">impl</span> <span style="color: #204a87;">Inst</span> <span style="color: #346604;">for</span> <span style="color: #204a87;">Bar</span> {
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">new</span>(<span style="color: #b35000;">i</span>: <span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">Bar</span> {
+        <span style="color: #204a87;">Bar</span>(i, i+10)
+    }
+}
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">foobar</span>&lt;<span style="color: #b35000;">T</span>: <span style="color: #204a87;">Inst</span>&gt;(<span style="color: #b35000;">i</span>: <span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">T</span>{
+    <span style="color: #204a87;">T</span>::new(i)
+}
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">f</span>: <span style="color: #204a87;">Foo</span> = foobar(10);
+    <span style="color: #75507b;">assert_eq!</span>(f, <span style="color: #204a87;">Foo</span>(10));
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">b</span>: <span style="color: #204a87;">Bar</span> = foobar(20);
+    <span style="color: #75507b;">assert_eq!</span>(b, <span style="color: #204a87;">Bar</span>(20, 30));
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org0d03fb1" class="outline-3">
+<h3 id="org0d03fb1"><span class="section-number-3">3.4</span> 深入trait</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+从类型系统的角度来说，trait是Rust对Ad-hoc多态的支持。
+</p>
+
+<p>
+从语义上来说，trait是在行为上对类型的约束，这种约束可以让trait有如下4种用法：
+</p>
+<ul class="org-ul">
+<li>接口抽象</li>
+<li>泛型约束</li>
+<li>抽象类型</li>
+<li>标签trait</li>
+</ul>
+</div>
+<div id="outline-container-orgb9060c6" class="outline-4">
+<h4 id="orgb9060c6"><span class="section-number-4">3.4.1</span> 接口抽象</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<p>
+特点：
+</p>
+<ul class="org-ul">
+<li>接口中可以定义方法，并支持默认实现</li>
+<li>接口中不能实现另一个借口，但是借口之间可以继承</li>
+<li>同一个借口可以同时被多个类型实现，但不能被同一个类型实现多次</li>
+<li>使用impl关键字为类型实现接口方法</li>
+<li>使用trait关键字来定义接口</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./images/trait_impl.png" alt="trait_impl.png" />
+</p>
+</div>
+
+<p>
+利用泛型trait实现加法抽象：
+</p>
+<div class="org-src-container">
+<pre class="src src-rust"><span style="color: #346604;">trait</span> <span style="color: #204a87;">Add</span>&lt;<span style="color: #204a87;">RHS</span>, <span style="color: #204a87;">Output</span>&gt; {
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">my_add</span>(<span style="color: #346604;">self</span>, <span style="color: #b35000;">rhs</span>:<span style="color: #204a87;">RHS</span>) -&gt; <span style="color: #204a87;">Output</span>;
+}
+<span style="color: #346604;">impl</span> <span style="color: #204a87;">Add</span>&lt;<span style="color: #204a87;">i32</span>, <span style="color: #204a87;">i32</span>&gt; <span style="color: #346604;">for</span> <span style="color: #204a87;">i32</span> {
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">my_add</span>(<span style="color: #346604;">self</span>, <span style="color: #b35000;">rhs</span>:<span style="color: #204a87;">i32</span>) -&gt; <span style="color: #204a87;">i32</span> {
+        <span style="color: #346604;">self</span> + rhs
+    }
+}
+<span style="color: #346604;">impl</span> <span style="color: #204a87;">Add</span>&lt;<span style="color: #204a87;">u32</span>, <span style="color: #204a87;">i32</span>&gt; <span style="color: #346604;">for</span> <span style="color: #204a87;">u32</span> {
+    <span style="color: #346604;">fn</span> <span style="color: #a40000;">my_add</span>(<span style="color: #346604;">self</span>, <span style="color: #b35000;">rhs</span>:<span style="color: #204a87;">u32</span>) -&gt; <span style="color: #204a87;">i32</span> {
+        (<span style="color: #346604;">self</span> + rhs) <span style="color: #346604;">as</span> <span style="color: #204a87;">i32</span>
+    }
+}
+<span style="color: #346604;">fn</span> <span style="color: #a40000;">main</span>() {
+    <span style="color: #346604;">let</span> (a,b,c,d) = (1i32, 2i32, 3u32, 4u32);
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">x</span>: <span style="color: #204a87;">i32</span> = a.my_add(b);
+    <span style="color: #346604;">let</span> <span style="color: #b35000;">y</span>: <span style="color: #204a87;">i32</span> = c.my_add(d);
+    <span style="color: #75507b;">assert_eq!</span>(x, 3i32);
+    <span style="color: #75507b;">assert_eq!</span>(y, 7i32);
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfa11681" class="outline-4">
+<h4 id="orgfa11681"><span class="section-number-4">3.4.2</span> 抽象类型</h4>
+</div>
+</div>
+<div id="outline-container-orge47be58" class="outline-3">
+<h3 id="orge47be58"><span class="section-number-3">3.5</span> 类型转换</h3>
+<div class="outline-text-3" id="text-3-5">
+</div>
+<div id="outline-container-org1c2c222" class="outline-4">
+<h4 id="org1c2c222"><span class="section-number-4">3.5.1</span> deref解引用</h4>
+</div>
+<div id="outline-container-org4327f96" class="outline-4">
+<h4 id="org4327f96"><span class="section-number-4">3.5.2</span> as操作符</h4>
+<div class="outline-text-4" id="text-3-5-2">
+<p>
+as关键字不支持重载。as操作符最常用的场景就是转换Rust中的基本数据结构。
+</p>
+</div>
+</div>
+<div id="outline-container-org25368e0" class="outline-4">
+<h4 id="org25368e0"><span class="section-number-4">3.5.3</span> From和Into</h4>
+</div>
+</div>
+<div id="outline-container-org3cb02ae" class="outline-3">
+<h3 id="org3cb02ae"><span class="section-number-3">3.6</span> 当前trait系统的不足</h3>
+<div class="outline-text-3" id="text-3-6">
+<ul class="org-ul">
+<li>孤儿规则的局限性</li>
+<li>代码复用的效率不高</li>
+<li>抽象表达能力有待改进</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcfa870c" class="outline-2">
+<h2 id="orgcfa870c"><span class="section-number-2">4</span> 内存管理</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: shouchengcheng</p>
+<p class="date">Created: 2020-01-12 日 17:38</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
