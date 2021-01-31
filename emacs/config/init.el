@@ -217,7 +217,8 @@
 ;; f1返回跳转地址
 (global-set-key (kbd "<f1>") 'pop-tag-mark)
 ;;imenu-anywhere
-(global-set-key (kbd "<f2>") 'imenu-anywhere)
+;;(global-set-key (kbd "<f2>") 'imenu-anywhere)
+(global-set-key (kbd "<f2>") 'counsel-semantic-or-imenu)
 (global-set-key [f10] 'neotree-toggle)
 (global-set-key (kbd "M-.") 'xref-find-definitions-other-window)
 
