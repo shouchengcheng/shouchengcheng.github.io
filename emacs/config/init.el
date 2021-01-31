@@ -126,11 +126,11 @@
 (global-font-lock-mode t)
 (setq default-major-mode 'text-mode)
 ;;备份文件版本控制
-(setq version-control t)
-(setq kept-new-versions 3)
-(setq delete-old-versions t)
-(setq kept-old-versions 2)
-(setq dired-kept-versions 1)
+;;(setq version-control t)
+;;(setq kept-new-versions 3)
+;;(setq delete-old-versions t)
+;;(setq kept-old-versions 2)
+;;(setq dired-kept-versions 1)
 ;;简单设置auto-mode-alist
 (mapcar
  (function (lambda (setting)
@@ -172,7 +172,7 @@
 ;;不显示菜单
 (menu-bar-mode 0)
 ;;高亮当前行
-(global-hl-line-mode 1)
+(global-hl-line-mode 0)
 
 
 (custom-set-variables
